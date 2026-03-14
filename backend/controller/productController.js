@@ -50,9 +50,6 @@ export const getAllProducts = handleAsynError(async (req, res, next) => {
     //Apply pagination
     apiFeatures.pagination(resultPerPage);
     const products = await apiFeatures.query;
-    if (!products || products.length === 0) {
-        return next(new HandleError("No products found", 404));
-    }
     res.status(200).json({
         success: true,
         products,

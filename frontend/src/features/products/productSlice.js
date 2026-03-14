@@ -103,11 +103,12 @@ const productSlice = createSlice({
         builder
             .addCase(createReview.pending, (state) => {
                 state.reviewLoading = true;
-                state.error = null
+                state.reviewSuccess = false;
+                state.error = null;
             })
-            .addCase(createReview.fulfilled, (state, action) => {
-                state.reviewLoading = false
-                state.reviewSuccess = true
+            .addCase(createReview.fulfilled, (state) => {
+                state.reviewLoading = false;
+                state.reviewSuccess = true;
             })
             .addCase(createReview.rejected, (state, action) => {
                 state.reviewLoading = false;

@@ -8,10 +8,11 @@ function Product({ product }) {
     setRating(newRating)
     console.log(`Rating changed to: ${newRating}`);
   }
+  if (!product) return null;
   return (
     <Link to={`/product/${product._id}`} className="block text-inherit no-underline">
       <div className="w-full max-w-[260px] rounded-2xl overflow-hidden bg-gray-900/60 border border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-2 flex flex-col">
-        <div className="w-full h-50 flex items-center justify-center bg-gray-800">
+        <div className="w-full h-48 flex items-center justify-center bg-gray-800">
           <img src={product.image[0]?.url} alt={product.name} className="max-h-44 object-contain transition-transform duration-300 hover:scale-105" />
         </div>
         <div className="p-4 flex flex-col gap-1 text-center">
