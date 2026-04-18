@@ -7,6 +7,7 @@ import Footer from "../components/Footer"
 import Loader from '../components/Loader';
 import { logout } from '../features/user/userslice';
 
+
 function Profile() {
     const { loading, isAuthenticated, user } = useSelector(state => state.user)
     const navigate = useNavigate();
@@ -37,8 +38,10 @@ function Profile() {
                                     {user.email}
                                 </p>
                                 <div className="flex justify-center gap-7 mt-5">
-                                    <Link to={"/profile/update"} className="p-3 rounded-2xl bg-teal-700 hover:bg-teal-800 transition">Edit Profile</Link>
-                                    <Link to={"/password/update"} className="p-3 text-center rounded-2xl bg-teal-700 hover:bg-teal-800 transition">
+                                    <Link to={"/profile/update"} className="p-3 text-sm text-center rounded-2xl bg-teal-700 hover:bg-teal-800 transition">
+                                        Edit Profile
+                                    </Link>
+                                    <Link to={"/password/update"} className="p-3 text-sm text-center rounded-2xl bg-teal-700 hover:bg-teal-800 transition">
                                         Change Password
                                     </Link>
                                 </div>

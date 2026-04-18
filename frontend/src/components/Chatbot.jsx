@@ -102,7 +102,6 @@ export default function Chatbot() {
                 </h1>
                 <span className="text-sm text-gray-400">Online</span>
               </div>
-
               {/* Messages */}
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.length === 0 && (

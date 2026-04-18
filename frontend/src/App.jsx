@@ -32,6 +32,7 @@ import UpdateRole from './Admin/UpdateRole.jsx';
 import OrdersList from './Admin/OrdersList.jsx';
 import UpdateOrder from './Admin/UpdateOrder.jsx';
 import ReviewsList from './Admin/ReviewsList.jsx';
+import Wishlist from './components/Wishlist.jsx';
 
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
@@ -59,6 +60,7 @@ function App() {
         <Route path="/process/payment" element={<ProtectedRoute element={<Payment />} />} />
         <Route path="/paymentSuccess" element={<ProtectedRoute element={<PaymentSuccess />} />} />
         <Route path="/orders/user" element={<ProtectedRoute element={<MyOrders />} />} />
+        <Route path="/wishlist" element={<ProtectedRoute element={<Wishlist />} />} />
         <Route path="/order/:orderId" element={<ProtectedRoute element={<OrderDetails />} />} />
         <Route path="/admin/dashboard" element={<ProtectedRoute element={<Dashboard />} adminOnly={true} />} />
         <Route path="/admin/products" element={<ProtectedRoute element={<ProductsList />} adminOnly={true} />} />

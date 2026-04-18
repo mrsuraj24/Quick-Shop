@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { logout, removeSuccess } from '../features/user/userslice';
-import { Box, Avatar, Typography, IconButton, Menu, MenuItem, Badge, Divider } from "@mui/material"
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
-import PersonIcon from "@mui/icons-material/Person"
-import LogoutIcon from "@mui/icons-material/Logout"
-import Inventory2Icon from "@mui/icons-material/Inventory2"
-import DashboardIcon from "@mui/icons-material/Dashboard"
+import { Box, Avatar, Typography, IconButton, Menu, MenuItem, Badge, Divider } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import PersonIcon from "@mui/icons-material/Person";
+import LogoutIcon from "@mui/icons-material/Logout";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import ChatIcon from "@mui/icons-material/Chat";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
