@@ -24,10 +24,10 @@ function Navbar() {
     setShowSearch(false);
   };
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        <NavLink to="/" className="text-lg font-bold text-white tracking-wide">
-          Quick<span className="text-indigo-500">Shop</span>
+    <nav className="fixed top-0 left-0 w-full z-50 bg-[#020617]/80 backdrop-blur-xl border-b border-white/10 backdrop-blur-md border-b border-gray-800">
+      <div className="max-w-7xl mx-auto py-4 h-17 flex items-center justify-between">
+        <NavLink to="/" className="text-2xl font-extrabold tracking-wide text-white">
+          Quick<span className="text-indigo-500 drop-shadow-[0_0_10px_rgba(99,102,241,0.9)]">Shop</span>
         </NavLink>
         {/* Search (Desktop) */}
         <form

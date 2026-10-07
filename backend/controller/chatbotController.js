@@ -1,49 +1,73 @@
-import ChatMessage from "../models/chatbotModel.js";
+import OpenAI from "openai";
+import fs from "fs";
 import Product from "../models/productModel.js";
 import Order from "../models/orderModel.js";
-import { GoogleGenAI } from "@google/genai";
-import "dotenv/config";
+import ChatMessage from "../models/chatbotModel.js";
+import path from "path";
+import dotenv from "dotenv";
 
-// Gemini setup
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
+dotenv.config({
+  path: path.resolve("backend/config/config.env"),
 });
 
-// Ask Gemini
+const openai = new OpenAI({
+  apiKey:process.env.OPENAI_API_KEY,
+});
+
+
+// 🔹 AI RESPONSE FUNCTION
 async function askAI(message, products = []) {
+  const cleanProducts = products.map(p => ({
+  name: p.name,
+  price: `₹${p.price}`
+}));
   const prompt = `
-You are an e-commerce assistant.
+You are a smart e-commerce assistant.
 
-User query: ${message}
+User Query: ${message}
 
-Available products:
-${JSON.stringify(products)}
+Available Products:
+${JSON.stringify(cleanProducts)}
 
 Rules:
-- Only suggest products from the list
-- Do not make up products
-- Keep answers short and helpful
+- Understand the user's intent and respond naturally like a human
+- If user greets (hi, hello, hey), respond with a friendly greeting
+- If user talks normally, reply in a normal conversational way
+- Do not add extra text or explanation
+- Keep answer in 2-3 lines max
+- give the only one product suggestion
+- Give the answer according to the name of product that user search
+- If no product matches, reply: "Sorry, this product is not available."
 `;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
-    contents: prompt,
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    temperature: 0.3,
+    messages: [{ role: "user", content: prompt }],
   });
 
-  return response.text;
+  return response.choices[0].message.content;
 }
 
-// SEND MESSAGE
-export const sendMessage = async (req, res) => {
+
+// 🔹 CHAT + VOICE CONTROLLER
+export const chatbotHandler = async (req, res) => {
   try {
-    const { message } = req.body;
+    let { message } = req.body;
     const userId = req.user?._id || null;
 
-    if (!message || !message.trim()) {
-      return res.status(400).json({
-        success: false,
-        message: "Message is required",
+    // 🎤 VOICE SUPPORT (if audio file comes)
+    if (req.file) {
+      const transcription = await openai.audio.transcriptions.create({
+        file: fs.createReadStream(req.file.path),
+        model: "gpt-4o-mini-transcribe",
       });
+
+      message = transcription.text;
+    }
+
+    if (!message) {
+      return res.status(400).json({ message: "Message is required" });
     }
 
     // Save user message
@@ -65,12 +89,11 @@ export const sendMessage = async (req, res) => {
 
       const products = await Product.find({ price: { $lte: priceLimit } })
         .limit(5)
-        .select("name price description");
+        .select("title price description");
 
       if (!products.length) {
         reply = `No products found under ₹${priceLimit}`;
       } else {
-        // Gemini से smart suggestion
         reply = await askAI(message, products);
       }
     }
@@ -93,13 +116,13 @@ export const sendMessage = async (req, res) => {
       }
     }
 
-    // 🤖 GENERAL AI CHAT
+    // 🤖 GENERAL CHAT
     else {
-      const products = await Product.find().limit(5).select("name price");
+      const products = await Product.find().limit(5).select("title price");
       reply = await askAI(message, products);
     }
 
-    // Save assistant message
+    // Save bot reply
     if (userId) {
       await ChatMessage.create({
         user: userId,
@@ -110,37 +133,12 @@ export const sendMessage = async (req, res) => {
 
     res.json({
       success: true,
+      message,
       reply,
     });
+
   } catch (error) {
-    console.error("Chatbot error:", error);
-
-    res.status(500).json({
-      success: false,
-      message: "Chatbot error",
-    });
-  }
-};
-
-// CHAT HISTORY
-export const getHistory = async (req, res) => {
-  try {
-    const userId = req.user?._id;
-
-    const messages = await ChatMessage.find({ user: userId }).sort({
-      createdAt: 1,
-    });
-
-    res.json({
-      success: true,
-      messages,
-    });
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      success: false,
-      message: "Failed to load chat history",
-    });
+    console.error("Chatbot Error:", error);
+    res.status(500).json({ message: "Chatbot error" });
   }
 };

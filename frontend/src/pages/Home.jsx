@@ -40,12 +40,6 @@ function Home() {
                   ✨ Smart Shopping Starts Here
                 </span>
               </div>
-              <h1 className="text-2xl md:text-5xl font-extrabold text-white m-4">
-                Welcome to <span className="text-indigo-500">ShopEasy</span>
-              </h1>
-              <p className="text-gray-400 text-lg mb-10 delay-100">
-                Premium products, seamless experience, and modern design crafted for you.
-              </p>
               <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4">
                 <button onClick={() => navigate("/products")} className="px-7 py-3 rounded-full bg-indigo-600 text-white font-medium shadow-lg hover:bg-indigo-700 hover:shadow-indigo-500/30 transition">
                   Shop Now →

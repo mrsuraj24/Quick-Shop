@@ -33,6 +33,8 @@ import OrdersList from './Admin/OrdersList.jsx';
 import UpdateOrder from './Admin/UpdateOrder.jsx';
 import ReviewsList from './Admin/ReviewsList.jsx';
 import Wishlist from './components/Wishlist.jsx';
+import Contact from './components/Contact.jsx';
+import About from './components/About.jsx';
 
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.user);
@@ -46,6 +48,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
         <Route path="/products/:keyword" element={<Products />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

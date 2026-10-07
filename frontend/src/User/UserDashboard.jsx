@@ -58,22 +58,21 @@ function UserDashboard({ user }) {
                         </MenuItem>
                     )}
                     <MenuItem onClick={() => navigate("/profile")}>
-                        <PersonIcon sx={{ mr: 1 }} /> Profile
+                        <PersonIcon sx={{ mr: 1 }} /> My Profile
                     </MenuItem>
                     <MenuItem onClick={() => navigate("/orders/user")}>
-                        <Inventory2Icon sx={{ mr: 1 }} /> Orders
-                    </MenuItem>
-                    <MenuItem onClick={() => navigate("/wishlist")}>
-                        <FavoriteIcon sx={{ mr: 1 }} /> Wishlist
+                        <Inventory2Icon sx={{ mr: 1 }} /> My Orders
                     </MenuItem>
                     <MenuItem onClick={() => navigate("/cart")}>
                         <Badge badgeContent={cartItems.length} color="primary">
                             <ShoppingCartIcon sx={{ mr: 1 }} />
-                        </Badge>
-                        Cart
+                        </Badge> Cart
+                    </MenuItem>
+                    <MenuItem onClick={() => navigate("/wishlist")}>
+                        <FavoriteIcon sx={{ mr: 1 }} /> Wishlist
                     </MenuItem>
                     <MenuItem onClick={() => navigate("/chatbot")}>
-                        <ChatIcon sx={{ mr: 1 }} /> Help
+                        <ChatIcon sx={{ mr: 1 }} /> AI Assistant
                     </MenuItem>
                     <Divider sx={{ bgcolor: "#243754", my: 1 }} />
                     <MenuItem onClick={logoutUser} sx={{ color: "#e04242" }}>
